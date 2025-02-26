@@ -15,8 +15,7 @@ public class NewBehaviourScript : MonoBehaviour
     private GameObject[]  trajectoires;
     //material de la trajectoire
     public Material trajectoryMaterial;
-    //vitesse de rotation
-    public int speed =10;
+    
 
     // Start is called before the first frame update
     void Start(){
@@ -37,7 +36,7 @@ public class NewBehaviourScript : MonoBehaviour
         PlanetManager.current.TrajChange += DisplayTrajectories; //abonnement au TrajChange
 
         CreateTrajectories(); //création des trajectoires et stockage de celles ci dans le GameObject trajectoires
-
+        DisplayTrajectories(false);
     }
 
     // Update is called once per frame

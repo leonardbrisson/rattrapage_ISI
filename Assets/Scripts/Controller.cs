@@ -5,14 +5,12 @@ using UnityEngine;
 
 public class Controller : MonoBehaviour
 {
-    int day = 0;
-    int month = 0;
-    int year = 0;
+    public Transform sun;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        PlanetManager.current.Cursor = sun;
     }
 
     // Update is called once per frame

@@ -3,6 +3,8 @@ using UnityEngine;
 public class PlanetManager : MonoBehaviour
 {
 public static PlanetManager current;
+//vitesse de rotation
+    public int speed =100;
 private void Awake(){
     // Vérifie s'il existe déjà une instance
     if (current == null){
@@ -65,11 +67,32 @@ public UDateTime Date{
         }
     }
 
-    public Boolean Play = true;
 
     public event Action<Boolean> TrajChange;
     public void TrajChanged(Boolean b)
     {
         TrajChange?.Invoke(b);
     }
+
+    private Boolean play = true; 
+    
+    public Boolean Play
+    {
+        get => play;
+        set
+        {
+            play = value;
+        }
+    }
+
+    [SerializeField] private Transform cursor = null;
+
+    public Transform Cursor //Astre sélectionner 
+     {
+    get => cursor;
+    set
+     {
+     cursor = value;
+    }
+    }
 }
