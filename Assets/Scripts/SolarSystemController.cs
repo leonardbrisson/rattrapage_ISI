@@ -15,6 +15,8 @@ public class NewBehaviourScript : MonoBehaviour
     private GameObject[]  trajectoires;
     //material de la trajectoire
     public Material trajectoryMaterial;
+    //vitesse de rotation
+    public int speed =10;
 
     // Start is called before the first frame update
     void Start(){
@@ -25,6 +27,7 @@ public class NewBehaviourScript : MonoBehaviour
         }
 
         UpdateScale(true); //initialisation de la taille des planètes
+        UpdatePosition(DateTime.Now); //initialisation de la position
 
         PlanetManager.current.Scale = true; 
 
@@ -39,11 +42,14 @@ public class NewBehaviourScript : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-        UpdatePosition(DateTime.Now);
+        if (PlanetManager.current.Play==true){ 
+        PlanetManager.current.Date = PlanetManager.current.Date.dateTime.AddHours(PlanetManager.current.speed);
+      }
     }
 
     void UpdatePosition(UDateTime t){
         //met à jour la position des planètes à la date t
+        Debug.Log(t);
         for (int i = 0; i < Planets.Count; i++) {
             Planets[i].transform.SetPositionAndRotation(PlanetData.GetPlanetPosition((PlanetData.Planet)i,t) , new Quaternion());
         }
@@ -121,7 +127,6 @@ public class NewBehaviourScript : MonoBehaviour
                 {
                     // Activer ou désactiver les trajectoires
                     trajectoire.SetActive(b);
-                    Debug.Log(b);
                 }
              }
     }

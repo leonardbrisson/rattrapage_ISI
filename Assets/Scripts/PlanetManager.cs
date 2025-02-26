@@ -65,6 +65,8 @@ public UDateTime Date{
         }
     }
 
+    public Boolean Play = true;
+
     public event Action<Boolean> TrajChange;
     public void TrajChanged(Boolean b)
     {
