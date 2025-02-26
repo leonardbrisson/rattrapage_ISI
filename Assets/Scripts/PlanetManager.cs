@@ -2,51 +2,72 @@ using System;
 using UnityEngine;
 public class PlanetManager : MonoBehaviour
 {
- public static PlanetManager current;
- private void Awake()
- {
- if (current == null)
- {
- current = this;
- }
- else
- {
- Destroy(obj: this);
- }
- }
+public static PlanetManager current;
+private void Awake(){
+    // Vérifie s'il existe déjà une instance
+    if (current == null){
+        current = this;
+    }
+    else{
+        Destroy(obj: this);
+    }
+}
 
- [SerializeField]
- private UDateTime date;
- public UDateTime Date
- {
- get => date;
- set
- {
- date = value;
- TimeChanged(value.dateTime); //Fire the event
- }
- }
-  public event Action<UDateTime> OnTimeChange;
- public void TimeChanged(UDateTime newTime)
- {
- OnTimeChange?.Invoke(newTime);
- }
+// Gestion du temps
+[SerializeField]
+private UDateTime date;
+public UDateTime Date{
+    get => date;
+    set{
+        date = value;
+        TimeChanged(value.dateTime);
+    }
+}
 
- [SerializeField]
- private Boolean scale;
- public Boolean Scale
- {
- get => scale;
- set
- {
- scale = value;
- ScaleChanged(value); //Fire the event
- }
- }
+// Événement déclenché lors du changement de temps
+    public event Action<UDateTime> OnTimeChange;
+    public void TimeChanged(UDateTime newTime)
+    {
+        OnTimeChange?.Invoke(newTime);
+    }
 
- public event Action<Boolean> ScaleChange;
- public void ScaleChanged(Boolean b)
- {
- ScaleChange?.Invoke(b);
- }
+    // Gestion de l'échelle
+    [SerializeField]
+    private Boolean scale;
+    
+    public Boolean Scale
+    {
+        get => scale;
+        set
+        {
+            scale = value;
+            ScaleChanged(value);
+        }
+    }
+
+    public event Action<Boolean> ScaleChange;
+    public void ScaleChanged(Boolean b)
+    {
+        ScaleChange?.Invoke(b);
+    }
+
+    // Gestion de l'affichage des trajectoires
+    [SerializeField]
+    private Boolean trajectories = true; 
+    
+    public Boolean Trajectories
+    {
+        get => trajectories;
+        set
+        {
+            trajectories = value;
+            TrajChanged(value);
+        }
+    }
+
+    public event Action<Boolean> TrajChange;
+    public void TrajChanged(Boolean b)
+    {
+        TrajChange?.Invoke(b);
+    }
 }

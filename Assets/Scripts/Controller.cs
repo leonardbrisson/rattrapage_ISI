@@ -17,13 +17,10 @@ public class Controller : MonoBehaviour
     }
 
     public void ChangeScale(){
-        if (PlanetManager.current.Scale == true){
-        PlanetManager.current.Scale = false;
-        return;
+        PlanetManager.current.Scale =! PlanetManager.current.Scale;
         }
-        if (PlanetManager.current.Scale == false){
-        PlanetManager.current.Scale = true;
-        return;
+    
+    public void Trajectory(){
+        PlanetManager.current.Trajectories=!PlanetManager.current.Trajectories;
         }
-    }
 }
