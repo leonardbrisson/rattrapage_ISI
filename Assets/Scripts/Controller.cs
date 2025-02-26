@@ -42,4 +42,16 @@ public class Controller : MonoBehaviour
         // Bascule de la variable play
         PlanetManager.current.Play = ! PlanetManager.current.Play;
     }
+
+public void SpeedUp(){ 
+  PlanetManager.current.speed += 5;
+}
+
+public void SpeedDown(){ 
+  PlanetManager.current.speed -= 5;
+}
+
+public void SpeedReset(){ 
+  PlanetManager.current.speed = 25;
+}
 }
