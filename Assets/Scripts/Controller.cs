@@ -30,28 +30,29 @@ public class Controller : MonoBehaviour
         }
     
     public void ChangeYear(String s){
-        //change l'année
-        //int year = int.Parse(s);
-        //Debug.Log(year);
+        //change la date
         DateTime parsedDate;
         DateTime.TryParse(s, out parsedDate);
         PlanetManager.current.Date = parsedDate;
     }
 
     public void Play(){ 
-        // Bascule de la variable play
+        // change l'état de la variable play
         PlanetManager.current.Play = ! PlanetManager.current.Play;
     }
 
 public void SpeedUp(){ 
+  //accélère de 5 la vitesse
   PlanetManager.current.speed += 5;
 }
 
 public void SpeedDown(){ 
+  //ralenti de 5 la vitesse
   PlanetManager.current.speed -= 5;
 }
 
 public void SpeedReset(){ 
+  //remet la vitesse à 25
   PlanetManager.current.speed = 25;
 }
 }

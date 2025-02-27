@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class MouseListener : MonoBehaviour
 {
-        public GameObject descriptions;
+    public GameObject descriptions;
     public int indice;
     void Start()
     {
       
-    foreach (Transform description in descriptions.transform){// désactiver toute les infos
+    foreach (Transform description in descriptions.transform){  //cacher au démarrage
     description.gameObject.SetActive(false);
     }  
     }
@@ -22,12 +22,12 @@ public class MouseListener : MonoBehaviour
 
      private void OnMouseDown()
     {
-    PlanetManager.current.Cursor = transform; //changer de cible pour la caméra 
+    PlanetManager.current.Cursor = transform; //mettre la planète au centre 
     
-    foreach (Transform infos in descriptions.transform){
+    foreach (Transform infos in descriptions.transform){ //re tout désactiver
         infos.gameObject.SetActive(false);
     }
-    descriptions.transform.GetChild(indice).gameObject.SetActive(true); // afficher les bonnes infos 
+    descriptions.transform.GetChild(indice).gameObject.SetActive(true); //activer la description voulue 
 
     }
-}
+} 

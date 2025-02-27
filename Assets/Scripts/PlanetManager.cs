@@ -26,7 +26,6 @@ public UDateTime Date{
     }
 }
 
-// Événement déclenché lors du changement de temps
     public event Action<UDateTime> OnTimeChange;
     public void TimeChanged(UDateTime newTime)
     {
@@ -67,13 +66,14 @@ public UDateTime Date{
         }
     }
 
-
     public event Action<Boolean> TrajChange;
     public void TrajChanged(Boolean b)
     {
         TrajChange?.Invoke(b);
     }
 
+    // Gestion de l'activation du boutton play
+    [SerializeField]
     private Boolean play = true; 
     
     public Boolean Play
@@ -85,9 +85,10 @@ public UDateTime Date{
         }
     }
 
-    [SerializeField] private Transform cursor = null;
-
-    public Transform Cursor //Astre sélectionner 
+    //Gestion de la souris
+    [SerializeField] 
+    private Transform cursor = null;
+    public Transform Cursor //Astre sélectionné 
      {
     get => cursor;
     set

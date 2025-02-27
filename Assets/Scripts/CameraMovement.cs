@@ -1,46 +1,48 @@
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
-{
+{   
+    //paramètres par défaut
     [SerializeField] public Camera cam;   
-    [SerializeField] public float distanceToCursor = 10;
-    [SerializeField] public float zoomSpeed = 2f; // Vitesse de zoom
-    [SerializeField] public float minZoom = 1f;   // Distance minimale de zoom
-    [SerializeField] public float maxZoom = 20f;  // Distance maximale de zoom
+    [SerializeField] public float zoomDistance = 10;
+    [SerializeField] public float zoomSpeed = 2f;
+    [SerializeField] public float minZoom = 1f;
+    [SerializeField] public float maxZoom = 20f;
 
-    private Vector3 previousPosition;
+    private Vector3 lastMousePosition;
 
     private void Update()
+{
+    // Détection du clic gauche pour initialiser la rotation
+    if (Input.GetMouseButtonDown(0))
     {
-        // Rotation de la caméra avec le clic gauche de la souris
-        if (Input.GetMouseButtonDown(0))
-        {
-            previousPosition = cam.ScreenToViewportPoint(Input.mousePosition);
-        }
-        else if (Input.GetMouseButton(0))
-        {
-            Vector3 newPosition = cam.ScreenToViewportPoint(Input.mousePosition);
-            Vector3 direction = previousPosition - newPosition;
+        lastMousePosition = cam.ScreenToViewportPoint(Input.mousePosition);
+    }
+    else if (Input.GetMouseButton(0))
+    {
+        Vector3 currentMousePosition = cam.ScreenToViewportPoint(Input.mousePosition);
+        Vector3 movementDelta = lastMousePosition - currentMousePosition;
 
-            float rotationAroundYAxis = -direction.x * 180; // Mouvement horizontal
-            float rotationAroundXAxis = direction.y * 180;  // Mouvement vertical
+        float rotationX = movementDelta.y * 180;  // Rotation verticale
+        float rotationY = -movementDelta.x * 180; // Rotation horizontale
 
-            cam.transform.position = PlanetManager.current.Cursor.position;
+        cam.transform.position = PlanetManager.current.Cursor.position;
 
-            cam.transform.Rotate(new Vector3(1, 0, 0), rotationAroundXAxis);
-            cam.transform.Rotate(new Vector3(0, 1, 0), rotationAroundYAxis, Space.World);
+        cam.transform.Rotate(new Vector3(1, 0, 0), rotationX);
+        cam.transform.Rotate(new Vector3(0, 1, 0), rotationY, Space.World);
 
-            cam.transform.Translate(new Vector3(0, 0, -distanceToCursor));
+        cam.transform.Translate(new Vector3(0, 0, -zoomDistance));
 
-            previousPosition = newPosition;
-        }
+        lastMousePosition = currentMousePosition;
+    }
 
-        // Zoom avec la molette de la souris
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        distanceToCursor -= scroll * zoomSpeed; // Modifie la distance cible en fonction du défilement
-        distanceToCursor = Mathf.Clamp(distanceToCursor, minZoom, maxZoom); // Limite le zoom entre min et max
+    // Gestion du zoom avec la molette de la souris
+    float zoomInput = Input.GetAxis("Mouse ScrollWheel");
+    zoomDistance -= zoomInput * zoomSpeed; // Ajustement du niveau de zoom
+    zoomDistance = Mathf.Clamp(zoomDistance, minZoom, maxZoom); // Contrôle des limites du zoom
 
-        // Applique le zoom en ajustant la position de la caméra
-        cam.transform.position = PlanetManager.current.Cursor.position - cam.transform.forward * distanceToCursor;
-    }
+    // Mise à jour de la position de la caméra en fonction du zoom
+    cam.transform.position = PlanetManager.current.Cursor.position - cam.transform.forward * zoomDistance;
+}
+
 }

@@ -48,7 +48,6 @@ public class NewBehaviourScript : MonoBehaviour
 
     void UpdatePosition(UDateTime t){
         //met à jour la position des planètes à la date t
-        Debug.Log(t);
         for (int i = 0; i < Planets.Count; i++) {
             Planets[i].transform.SetPositionAndRotation(PlanetData.GetPlanetPosition((PlanetData.Planet)i,t) , new Quaternion());
         }
